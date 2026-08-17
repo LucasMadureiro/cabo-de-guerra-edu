@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabo de Guerra Educacional - v0.3</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Importando o Firebase (Versão Compatível) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Cabo de Guerra Educacional</h1>
+    </header>
+
+    <main>
+        <!-- TELA 0: Escolha de Perfil -->
+        <section id="role-screen" style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 400px; margin: 40px auto;">
+            <h2>Bem-vindo!</h2>
+            <p style="color: #666; margin-bottom: 25px;">Como você deseja acessar o jogo?</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <button id="btn-show-student" class="btn-correct" style="padding: 15px; font-size: 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: transform 0.2s;">
+                    👨‍🎓 Sou Aluno (Entrar)
+                </button>
+                <button id="btn-show-teacher" style="padding: 15px; font-size: 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; background-color: #6c757d; color: white; transition: transform 0.2s;">
+                    👨‍🏫 Sou Professor (Criar)
+                </button>
+            </div>
+        </section>
+
+        <!-- TELA 1A: Entrada do Aluno -->
+        <section id="student-screen" class="hidden" style="background: white; padding: 30px; border-radius: 12px; max-width: 500px; margin: 0 auto;">
+            <h2>Entrar na Partida</h2>
+            <div class="form-group">
+                <label>Seu Nome:</label>
+                <input type="text" id="input-student-name" placeholder="Ex: Lucas" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
+            </div>
+            <div class="form-group">
+                <label>Código da Sala:</label>
+                <input type="number" id="input-room-code" placeholder="Ex: 123456" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
+            </div>
+            <button id="btn-join-room" style="width: 100%; padding: 15px; font-size: 18px; background-color: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Entrar</button>
+            <button id="btn-back-role-1" style="margin-top: 10px; border: none; background: none; color: #007bff; cursor: pointer; text-decoration: underline;">Voltar</button>
+        </section>
+
+        <!-- TELA 1B: Configuração do Professor -->
+        <section id="setup-screen" class="hidden">
+            <h2>Configuração da Partida</h2>
+            <div class="form-group">
+                <label>Disciplina:</label>
+                <select id="sel-subject"></select>
+            </div>
+            <div class="form-group">
+                <label>Conteúdo:</label>
+                <select id="sel-topic"></select>
+            </div>
+            <div class="form-group">
+                <label>Dificuldade:</label>
+                <select id="sel-difficulty"></select>
+            </div>
+            <div class="form-group">
+                <label>Quantidade de Rodadas:</label>
+                <select id="sel-rounds">
+                    <option value="5">5 Rodadas</option>
+                    <option value="10">10 Rodadas</option>
+                    <option value="15">15 Rodadas</option>
+                </select>
+            </div>
+            <button id="btn-create-room">Criar Sala</button>
+            <button id="btn-back-role-2" style="margin-top: 10px; border: none; background: none; color: #007bff; cursor: pointer; text-decoration: underline;">Voltar</button>
+        </section>
+
+        <!-- TELA 2: Lobby (Sala de Espera) -->
+        <section id="lobby-screen" class="hidden" style="background: white; padding: 30px; border-radius: 12px; max-width: 600px; margin: 0 auto;">
+            <h2>Código da Sala: <strong id="display-room-code" style="font-size: 32px; color: #007bff; letter-spacing: 5px;">000000</strong></h2>
+            <p>Aguardando os jogadores entrarem e escolherem suas equipes...</p>
+            
+            <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+                <div style="text-align: left;">
+                    <h3 class="blue-team">🔵 Equipe Azul (<span id="count-blue">0</span>)</h3>
+                    <button id="btn-choose-blue" style="padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer;">Entrar no Azul</button>
+                    <ul id="list-blue" style="list-style-type: none; padding: 0;"></ul>
+                </div>
+                <div style="text-align: left;">
+                    <h3 class="red-team">🔴 Equipe Vermelha (<span id="count-red">0</span>)</h3>
+                    <button id="btn-choose-red" style="padding: 10px; background-color: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer;">Entrar no Vermelho</button>
+                    <ul id="list-red" style="list-style-type: none; padding: 0;"></ul>
+                </div>
+            </div>
+
+            <!-- Botão que só aparece para o Professor -->
+            <button id="btn-start-multiplayer" class="hidden" style="width: 100%; padding: 15px; font-size: 18px; background-color: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 20px;">Iniciar Partida Agora</button>
+        </section>
+
+        <!-- TELA 3: O Jogo (Arena) -->
+        <div id="game-screen" class="hidden">
+            <!-- Placar e Corda -->
+            <section id="arena">
+                <div class="team-info blue-team">
+                    <h2>Azul 🔵</h2>
+                    <span id="score-blue">0</span> pts
+                </div>
+                <div class="tug-of-war-container">
+                    <div id="rope"></div>
+                    <div id="knot" style="left: 50%;">🪢</div>
+                </div>
+                <div class="team-info red-team">
+                    <h2>Vermelho 🔴</h2>
+                    <span id="score-red">0</span> pts
+                </div>
+            </section>
+            
+            <!-- Área da Pergunta (Otimizada para Celular) -->
+            <section id="question-area" style="background: #ffffff; padding: 25px; border-radius: 16px; max-width: 600px; margin: 20px auto; box-shadow: 0 8px 24px rgba(0,0,0,0.12);">
+                
+                <!-- Cabeçalho: Rodada e Cronômetro -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #f1f2f6; padding-bottom: 12px;">
+                    <h3 id="round-info" style="margin: 0; color: #747d8c; font-size: 1.2rem;">Rodada 1</h3>
+                    <h2 id="timer" style="margin: 0; color: #ff4757; font-size: 1.6rem; font-weight: 900;">⏱ 15</h2>
+                </div>
+                
+                <!-- Texto da Pergunta -->
+                <p id="question-text" style="font-size: 1.3rem; font-weight: 700; color: #2f3542; margin-bottom: 25px; line-height: 1.5; min-height: 80px;">
+                    Aguardando professor iniciar a rodada...
+                </p>
+                
+                <!-- Painel de Status da Equipe (Novo Design) -->
+                <div id="team-status-container" style="background: #f8f9fa; border-left: 5px solid #007bff; padding: 15px; border-radius: 0 8px 8px 0; margin-bottom: 20px; display: none;">
+                    <span style="font-size: 1.1rem; color: #2f3542;">👥 <strong id="team-status-text">Aguardando respostas...</strong></span>
+                </div>
+
+                <!-- Alternativas -->
+                <div id="options" style="display: flex; flex-direction: column; gap: 12px;">
+                    <!-- Os botões serão injetados aqui pelo JavaScript -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

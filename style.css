@@ -1,0 +1,191 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden; /* Evita barra de rolagem horizontal com os confetes */
+}
+
+header h1 {
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+/* --- TELA DE CONFIGURAÇÃO --- */
+#setup-screen {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+#btn-create-room {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+#btn-create-room:hover {
+    background-color: #0056b3;
+}
+
+/* --- TELA DO JOGO (ARENA E QUESTÕES) --- */
+#arena {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 20px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.blue-team { color: #007bff; font-weight: bold; }
+.red-team { color: #dc3545; font-weight: bold; }
+
+.tug-of-war-container {
+    flex-grow: 1;
+    position: relative;
+    height: 60px;
+    margin: 0 30px;
+    display: flex;
+    align-items: center;
+    background-color: #e9ecef;
+    border-radius: 30px;
+}
+
+#rope {
+    width: 100%;
+    height: 8px;
+    background-color: #8B4513; 
+    position: absolute;
+    z-index: 1;
+}
+
+#knot {
+    font-size: 40px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    transition: left 0.6s ease-out; /* Deslizamento da corda */
+}
+
+#question-area {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+#options button {
+    padding: 15px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    background-color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#options button:hover:not(:disabled) {
+    background-color: #f1f1f1;
+    border-color: #bbb;
+    transform: scale(1.02); /* Leve aumento ao passar o mouse */
+}
+
+#options button:disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* --- FEEDBACK VISUAL (NOVIDADE) --- */
+.btn-correct {
+    background-color: #28a745 !important;
+    color: white !important;
+    border-color: #1e7e34 !important;
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+}
+
+.btn-incorrect {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border-color: #bd2130 !important;
+}
+
+/* --- ANIMAÇÃO DE IMPACTO NA CORDA (NOVIDADE) --- */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+.shake-animation {
+    animation: shake 0.3s ease-in-out;
+}
+
+/* Botão de reiniciar */
+/* Estilo para o botão de voltar ao menu (com especificidade maior) */
+#options #btn-start {
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+#options #btn-start:hover {
+    background-color: #218838;
+    transform: scale(1.02);
+}
+
+.hidden {
+    display: none !important;
+}
