@@ -4,6 +4,8 @@ Um jogo multiplayer em tempo real projetado para transformar o ambiente de sala 
 
 O sistema permite que o professor crie salas virtuais, gerencie questões na nuvem e acompanhe o desempenho da turma, enquanto os alunos respondem a perguntas nos próprios celulares para puxar a "corda" virtual para sua equipe.
 
+Acesso: https://lucasmadureiro.github.io/cabo-de-guerra-edu/
+
 ## Principais Funcionalidades ##
 
 *   **Multiplayer em Tempo Real:** Sincronização instantânea de respostas, placar e animações da corda entre o painel do professor e os dispositivos dos alunos, utilizando arquitetura orientada a eventos.
