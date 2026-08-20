@@ -1,13 +1,21 @@
 // questions.js
+//
+// ATENÇÃO: este arquivo NÃO está sendo carregado pelo index.html no momento
+// (o banco de questões usado no jogo hoje vive dentro de script.js, na
+// constante `questoesBaseLocais`, mesclado com o banco da nuvem no Firebase).
+// As chaves de dificuldade aqui ("Fácil"/"Média"/"Difícil") foram alinhadas
+// com as usadas no resto do sistema — antes este arquivo usava "Médio", que
+// não bate com o "Média" usado em script.js/index.html e quebraria a mescla
+// silenciosamente se este gerador voltasse a ser usado.
 
 // 1. Estrutura vazia inicial
 const bancoDeQuestoes = {
     "Matemática": {
-        "Adição": { "Fácil": [], "Médio": [], "Difícil": [] },
-        "Subtração": { "Fácil": [], "Médio": [], "Difícil": [] },
-        "Multiplicação": { "Fácil": [], "Médio": [], "Difícil": [] },
-        "Divisão": { "Fácil": [], "Médio": [], "Difícil": [] },
-        "Equação": { "Fácil": [], "Médio": [], "Difícil": [] }
+        "Adição": { "Fácil": [], "Média": [], "Difícil": [] },
+        "Subtração": { "Fácil": [], "Média": [], "Difícil": [] },
+        "Multiplicação": { "Fácil": [], "Média": [], "Difícil": [] },
+        "Divisão": { "Fácil": [], "Média": [], "Difícil": [] },
+        "Equação": { "Fácil": [], "Média": [], "Difícil": [] }
     }
 };
 
@@ -58,7 +66,7 @@ for (let i = 0; i < QUANTIDADE; i++) {
 
     // Médio (20 a 100)
     let aM = rand(20, 100), bM = rand(20, 100);
-    bancoDeQuestoes["Matemática"]["Adição"]["Médio"].push({
+    bancoDeQuestoes["Matemática"]["Adição"]["Média"].push({
         pergunta: `Quanto é ${aM} + ${bM}?`, resposta: (aM + bM).toString(), alternativas: gerarAlternativas(aM + bM, 20)
     });
 
@@ -78,7 +86,7 @@ for (let i = 0; i < QUANTIDADE; i++) {
     });
 
     let sA_M = rand(50, 200), sB_M = rand(10, sA_M);
-    bancoDeQuestoes["Matemática"]["Subtração"]["Médio"].push({
+    bancoDeQuestoes["Matemática"]["Subtração"]["Média"].push({
         pergunta: `Quanto é ${sA_M} - ${sB_M}?`, resposta: (sA_M - sB_M).toString(), alternativas: gerarAlternativas(sA_M - sB_M, 20)
     });
 
@@ -97,7 +105,7 @@ for (let i = 0; i < QUANTIDADE; i++) {
     });
 
     let mM1 = rand(5, 15), mM2 = rand(5, 15);
-    bancoDeQuestoes["Matemática"]["Multiplicação"]["Médio"].push({
+    bancoDeQuestoes["Matemática"]["Multiplicação"]["Média"].push({
         pergunta: `Quanto é ${mM1} × ${mM2}?`, resposta: (mM1 * mM2).toString(), alternativas: gerarAlternativas(mM1 * mM2, 30)
     });
 
@@ -120,7 +128,7 @@ for (let i = 0; i < QUANTIDADE; i++) {
     // Médio (Resultados de 2 a 20, divisores de 5 a 15)
     let dM_res = rand(2, 20), dM_div = rand(5, 15);
     let dM_total = dM_res * dM_div;
-    bancoDeQuestoes["Matemática"]["Divisão"]["Médio"].push({
+    bancoDeQuestoes["Matemática"]["Divisão"]["Média"].push({
         pergunta: `Quanto é ${dM_total} ÷ ${dM_div}?`, resposta: dM_res.toString(), alternativas: gerarAlternativas(dM_res, 10)
     });
 
@@ -145,7 +153,7 @@ for (let i = 0; i < QUANTIDADE; i++) {
     // Médio: a * x = b
     let eqM_x = rand(2, 15), eqM_a = rand(2, 10);
     let eqM_b = eqM_a * eqM_x;
-    bancoDeQuestoes["Matemática"]["Equação"]["Médio"].push({
+    bancoDeQuestoes["Matemática"]["Equação"]["Média"].push({
         pergunta: `Qual o valor de 'x' em: ${eqM_a}x = ${eqM_b}?`, resposta: eqM_x.toString(), alternativas: gerarAlternativas(eqM_x, 10)
     });
 
