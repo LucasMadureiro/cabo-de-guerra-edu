@@ -57,6 +57,7 @@ body {
     color: var(--ink);
     margin: 0;
     padding: 20px;
+    position: relative;
     overflow-x: hidden; /* Evita barra de rolagem horizontal com os confetes */
     background-color: var(--paper);
     /* Textura sutil de "papel quadriculado" — um aceno discreto ao caderno
@@ -65,6 +66,42 @@ body {
         linear-gradient(rgba(16, 24, 43, 0.035) 1px, transparent 1px),
         linear-gradient(90deg, rgba(16, 24, 43, 0.035) 1px, transparent 1px);
     background-size: 28px 28px;
+}
+
+/* Manchas de cor suaves e desfocadas, uma de cada time, boiando bem devagar
+   atrás dos cartões. Dão profundidade e vida ao fundo sem competir com o
+   conteúdo — os cartões continuam sólidos e o texto continua muito legível. */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    width: 55vmax;
+    height: 55vmax;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.3;
+    z-index: -1;
+    pointer-events: none;
+}
+body::before {
+    background: var(--blue);
+    top: -18vmax;
+    left: -16vmax;
+    animation: deriva-fundo-a 28s ease-in-out infinite alternate;
+}
+body::after {
+    background: var(--red);
+    bottom: -18vmax;
+    right: -16vmax;
+    animation: deriva-fundo-b 34s ease-in-out infinite alternate;
+}
+@keyframes deriva-fundo-a {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(5vmax, 7vmax) scale(1.15); }
+}
+@keyframes deriva-fundo-b {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-5vmax, -7vmax) scale(1.12); }
 }
 
 h1, h2, h3 {
@@ -266,22 +303,22 @@ button, input, select, textarea { font-family: var(--font-body); }
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    font-size: 0.9rem !important;
-    color: var(--ink-soft) !important;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
 }
 
 #timer {
     font-family: var(--font-display);
     font-variant-numeric: tabular-nums;
     background: var(--ink);
-    color: #FFD86B !important;
+    color: #FFD86B;
     padding: 6px 14px;
     border-radius: var(--radius-pill);
-    font-size: 1.15rem !important;
+    font-size: 1.15rem;
     transition: color 0.2s ease;
 }
 #timer.timer-urgente {
-    color: #FF8A9A !important;
+    color: #FF8A9A;
     animation: pulse-timer 0.6s ease-in-out infinite;
 }
 @keyframes pulse-timer {
@@ -376,6 +413,7 @@ button, input, select, textarea { font-family: var(--font-body); }
     .shake-animation, #timer.timer-urgente { animation: none; }
     #knot { transition: none; }
     .btn, .answer-tile { transition: none; }
+    body::before, body::after { animation: none; }
 }
 
 .hidden { display: none !important; }

@@ -30,8 +30,8 @@
         <section id="student-screen" class="hidden screen-card" style="padding: 32px; max-width: 420px; text-align: center;">
             <h2>Entrar na Partida</h2>
             <div style="display: flex; flex-direction: column; gap: 14px; margin: 18px 0 20px;">
-                <input type="text" id="input-student-name" class="field-input" placeholder="Digite seu Nome" maxlength="30">
-                <input type="text" id="input-room-code" class="field-input" placeholder="Código da Sala" style="text-align: center; letter-spacing: 0.1em; font-family: var(--font-display);" maxlength="6" inputmode="numeric" pattern="[0-9]*">
+                <input type="text" id="input-student-name" class="field-input" placeholder="Digite seu Nome" aria-label="Seu nome" maxlength="30">
+                <input type="text" id="input-room-code" class="field-input" placeholder="Código da Sala" aria-label="Código da sala" style="text-align: center; letter-spacing: 0.1em; font-family: var(--font-display);" maxlength="6" inputmode="numeric" pattern="[0-9]*">
                 <button id="btn-join-room" class="btn btn-blue btn-block">Buscar Sala</button>
             </div>
             <div id="team-selection" style="display: flex; justify-content: space-between; gap: 10px; margin-bottom: 20px;">
@@ -46,19 +46,19 @@
             <h2 style="text-align: center; margin-top: 0;">Configurar Partida</h2>
             <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 25px;">
                 <div>
-                    <label class="field-label">Disciplina</label>
+                    <label class="field-label" for="sel-subject">Disciplina</label>
                     <select id="sel-subject" class="field-input"></select>
                 </div>
                 <div>
-                    <label class="field-label">Assunto</label>
+                    <label class="field-label" for="sel-topic">Assunto</label>
                     <select id="sel-topic" class="field-input"></select>
                 </div>
                 <div>
-                    <label class="field-label">Dificuldade</label>
+                    <label class="field-label" for="sel-difficulty">Dificuldade</label>
                     <select id="sel-difficulty" class="field-input"></select>
                 </div>
                 <div>
-                    <label class="field-label">Rodadas</label>
+                    <label class="field-label" for="sel-rounds">Rodadas</label>
                     <select id="sel-rounds" class="field-input">
                         <option value="3">3 Rodadas (Rápida)</option>
                         <option value="5" selected>5 Rodadas (Padrão)</option>
@@ -91,17 +91,17 @@
             <h2 id="modal-title-question" style="text-align: center; margin-top: 0; color: var(--amber-deep);">➕ Nova Questão</h2>
             <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; text-align: left;">
                 <div>
-                    <label class="field-label">Disciplina</label>
+                    <label class="field-label" for="new-subject">Disciplina</label>
                     <input type="text" id="new-subject" class="field-input" list="datalist-disciplinas" placeholder="Ex: Matemática" maxlength="40">
                     <datalist id="datalist-disciplinas"></datalist>
                 </div>
                 <div>
-                    <label class="field-label">Assunto</label>
+                    <label class="field-label" for="new-topic">Assunto</label>
                     <input type="text" id="new-topic" class="field-input" list="datalist-assuntos" placeholder="Ex: Frações" maxlength="40">
                     <datalist id="datalist-assuntos"></datalist>
                 </div>
                 <div>
-                    <label class="field-label">Dificuldade</label>
+                    <label class="field-label" for="new-difficulty">Dificuldade</label>
                     <select id="new-difficulty" class="field-input">
                         <option value="Fácil">Fácil</option>
                         <option value="Média">Média</option>
@@ -109,18 +109,18 @@
                     </select>
                 </div>
                 <div>
-                    <label class="field-label">Pergunta</label>
+                    <label class="field-label" for="new-question">Pergunta</label>
                     <textarea id="new-question" class="field-input" rows="3" placeholder="Digite a pergunta aqui..." maxlength="300" style="font-weight: 600;"></textarea>
                 </div>
                 <div style="background: var(--paper); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--line);">
-                    <label class="field-label">Alternativas</label>
-                    <input type="text" id="new-alt-1" class="field-input" placeholder="Opção 1" style="margin-bottom: 8px;" maxlength="60">
-                    <input type="text" id="new-alt-2" class="field-input" placeholder="Opção 2" style="margin-bottom: 8px;" maxlength="60">
-                    <input type="text" id="new-alt-3" class="field-input" placeholder="Opção 3" style="margin-bottom: 8px;" maxlength="60">
-                    <input type="text" id="new-alt-4" class="field-input" placeholder="Opção 4" maxlength="60">
+                    <label class="field-label" id="alternativas-label">Alternativas</label>
+                    <input type="text" id="new-alt-1" class="field-input" placeholder="Opção 1" aria-label="Alternativa 1" style="margin-bottom: 8px;" maxlength="60">
+                    <input type="text" id="new-alt-2" class="field-input" placeholder="Opção 2" aria-label="Alternativa 2" style="margin-bottom: 8px;" maxlength="60">
+                    <input type="text" id="new-alt-3" class="field-input" placeholder="Opção 3" aria-label="Alternativa 3" style="margin-bottom: 8px;" maxlength="60">
+                    <input type="text" id="new-alt-4" class="field-input" placeholder="Opção 4" aria-label="Alternativa 4" maxlength="60">
                 </div>
                 <div>
-                    <label class="field-label" style="color: var(--turf-deep);">Qual é a alternativa Correta?</label>
+                    <label class="field-label" for="new-correct-alt" style="color: var(--turf-deep);">Qual é a alternativa Correta?</label>
                     <select id="new-correct-alt" class="field-input" style="border-color: var(--turf);">
                         <option value="1">Alternativa 1</option>
                         <option value="2">Alternativa 2</option>

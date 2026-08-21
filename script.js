@@ -1070,7 +1070,12 @@ function processarFimDeRodada() {
 }
 
 function atualizarCorda(posicao) {
-    const porcentagem = 50 + (posicao * 8);
+    // posicao positivo = Azul indo melhor (ver diferenca = taxaAzul - taxaVermelha).
+    // Azul fica à ESQUERDA na tela, então quando o Azul pontua, o nó precisa se
+    // mover para a ESQUERDA (em direção ao próprio time) — como um cabo de
+    // guerra de verdade, onde quem "ganha pontos" PUXA a corda pro seu lado,
+    // e não empurra ela pro lado adversário. Por isso o sinal é invertido aqui.
+    const porcentagem = 50 - (posicao * 8);
     document.getElementById('knot').style.left = `${porcentagem}%`;
 }
 
